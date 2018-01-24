@@ -4,7 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>Remote Skills Test</title>
 
         <!-- Fonts -->
@@ -20,6 +21,8 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         <!-- Datatables library -->
         <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" >
+        <script src="js/product.js"></script>
     </head>
     <body>
         <div class="container-fluid">
@@ -27,30 +30,37 @@
             <div class="panel panel-default col-sm-6 col-sm-offset-3">
                 <div class="panel-heading">Add New Product</div>
                 <div class="panel-content"><br>
-                    <form class="form-horizontal" method="POST" >
+                    <form class="form-horizontal" id="new-product-form" >
                         <div class="form-group">
                             <label for="product_name" class="control-label col-sm-4">Product Name:</label>
-                            <div class="col-sm-8"><input name="product_name" type="text" class="form-control"></div>
+                            <div class="col-sm-8"><input name="product_name" required="required" type="text" class="form-control"></div>
                         </div><br>
                         <div class="form-group">
                             <label for="quantity" class="control-label col-sm-4">Quantity in stock:</label>
-                            <div class="col-sm-2"><input name="quantity" type="number" class="form-control"></div>
+                            <div class="col-sm-2"><input name="quantity" required="required" type="number" class="form-control"></div>
                         </div><br>
                         <div class="form-group">
                             <label for="price" class="control-label col-sm-4">Price per item (in $):</label>
-                            <div class="col-sm-2"><input name="price" type="number" class="form-control"></div>
+                            <div class="col-sm-2"><input name="price" required="required" step="0.01" type="number" class="form-control"></div>
                         </div><br>
                         <div class="row">
-                            <div class="col-sm-6 text-center"><button class="btn btn-default" name="reset">Reset</button></div>
+                            <div class="col-sm-6 text-center"><button class="btn btn-default" name="reset" type="button">Reset</button></div>
                             <div class="col-sm-6 text-center"><button class="btn btn-primary" name="submit" type="submit">Submit</button></div>
                         </div><br>
                     </form>
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1">
+                            <div class="row has-success" style="font-size:18px"><strong><span class="help-block text-center" id="notification_success"></span></strong></div>
+                            <div class="row has-error" style="font-size:18px"><strong><span class="help-block text-center" id="notification_error"></span></strong></div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
-            
+
             <div class="col-sm-8 col-sm-offset-2">
-            <h2>Product Inventory</h2>
-                <table class="display table table-bordered table-striped" width="100%">
+                <h2>Product Inventory</h2>
+                <table class="display table table-bordered table-striped" width="100%" id="product_table">
                     <thead>
                         <tr>
                             <th>Product Name</th>
@@ -61,7 +71,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        
+
                     </tbody>
                 </table>
             </div>
